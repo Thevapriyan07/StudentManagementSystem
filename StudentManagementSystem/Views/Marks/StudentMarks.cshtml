@@ -1,0 +1,31 @@
+﻿@model StudentMarksListViewModel
+
+<h2>Student Marks for  @Model.GradeName, Subject: @Model.SubjectName</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Marks</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.StudentsMarks)
+        {
+            <tr>
+                <td>@student.FullName</td>
+                <td>@student.Marks</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="AddMarks" class="btn btn-primary">Back to Marks Entry</a>

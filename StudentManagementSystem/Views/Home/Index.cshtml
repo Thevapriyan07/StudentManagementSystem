@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #e8f0ff, #cfd8dc), url('https://example.com/school-background.jpg'); /* Replace with actual image URL */
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+    }
+
+    .welcome-card {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8); /* Slight transparency to see background image */
+    }
+
+    .welcome-title {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #0d6efd;
+    }
+
+    .welcome-message {
+        font-size: 1.5rem;
+        color: #495057;
+        margin-top: 20px;
+    }
+
+    .highlight {
+        font-weight: 600;
+        color: #ff6f61;
+    }
+
+    /* Card Styling */
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+    }
+
+    /* Optional: Apply school-related images to the cards */
+    .bg-info {
+        background: url('https://example.com/school-info-background.jpg') no-repeat center center;
+        background-size: cover;
+    }
+
+    .bg-success {
+        background: url('https://example.com/school-success-background.jpg') no-repeat center center;
+        background-size: cover;
+    }
+</style>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="welcome-card">
+                <h1 class="welcome-title">Welcome to <span class="highlight">Our Student Management System</span></h1>
+                <p class="welcome-message">
+                    A modern platform designed for simplicity and efficiency in managing student information, academic records, and more.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Grades</h5>
+                    <p class="card-text">Keep track of student grades efficiently with our dynamic interface.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Track Performance</h5>
+                    <p class="card-text">Monitor student progress and academic achievements effortlessly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

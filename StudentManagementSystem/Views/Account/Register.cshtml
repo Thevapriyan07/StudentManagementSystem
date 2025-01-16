@@ -1,0 +1,138 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewBag.Title = "User Registration";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #f4f5f7;">
+    <div class="card shadow-lg p-5 rounded" style="max-width: 800px; width: 100%; background-color: #ffffff;">
+        <h2 class="text-center mb-4" style="font-family: 'Poppins', sans-serif; color: #007BFF;">@ViewBag.Title</h2>
+
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <!-- First Name and Last Name - Side-by-Side -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="form-label" style="font-weight: bold; color: #495057;">First Name</label>
+                        <input asp-for="FirstName" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="LastName" class="form-label" style="font-weight: bold; color: #495057;">Last Name</label>
+                        <input asp-for="LastName" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group mb-4">
+                <label asp-for="Email" class="form-label" style="font-weight: bold; color: #495057;">Email</label>
+                <input asp-for="Email" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group mb-4">
+                <label asp-for="Password" class="form-label" style="font-weight: bold; color: #495057;">Password</label>
+                <input asp-for="Password" class="form-control" type="password" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group mb-4">
+                <label asp-for="ConfirmPassword" class="form-label" style="font-weight: bold; color: #495057;">Confirm Password</label>
+                <input asp-for="ConfirmPassword" class="form-control" type="password" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group mb-4">
+                <label asp-for="DateOfBirth" class="form-label" style="font-weight: bold; color: #495057;">Date of Birth</label>
+                <input asp-for="DateOfBirth" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group mb-4">
+                <label asp-for="Gender" class="form-label" style="font-weight: bold; color: #495057;">Gender</label>
+                <select asp-for="Gender" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group mb-4">
+                <label asp-for="Address" class="form-label" style="font-weight: bold; color: #495057;">Address</label>
+                <input asp-for="Address" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group mb-4">
+                <label asp-for="PhoneNumber" class="form-label" style="font-weight: bold; color: #495057;">Phone Number</label>
+                <input asp-for="PhoneNumber" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Role -->
+            <div class="form-group mb-4">
+                <label asp-for="Role" class="form-label" style="font-weight: bold; color: #495057;">Role</label>
+                <select asp-for="Role" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;">
+                    <option value="">Select Role</option>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <option value="@role">@role</option>
+                    }
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <!-- Grade for Students -->
+            <div class="form-group mb-4" id="gradeContainer" style="display:none;">
+                <label asp-for="Grade" class="form-label" style="font-weight: bold; color: #495057;">Grade</label>
+                <select asp-for="GradeId" class="form-control" style="border-radius: 8px; border: 1px solid #007BFF;">
+                    <option value="">Select Grade</option>
+                    @foreach (var grade in Model.AvailableGrades)
+                    {
+                        <option value="@grade.Value">@grade.Text</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center d-flex justify-content-between">
+                <a href="/" class="btn btn-secondary mt-3" style="font-weight: bold;">Cancel</a>
+                <button type="submit" class="btn btn-primary mt-3" style="font-weight: bold;">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var roleSelect = document.querySelector('[name="Role"]');
+            var gradeContainer = document.getElementById('gradeContainer');
+
+            roleSelect.addEventListener('change', function () {
+                if (roleSelect.value === 'Student') {
+                    gradeContainer.style.display = 'block';
+                } else {
+                    gradeContainer.style.display = 'none';
+                }
+            });
+
+            roleSelect.dispatchEvent(new Event('change'));
+        });
+    </script>
+}

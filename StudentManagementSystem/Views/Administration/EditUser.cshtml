@@ -1,0 +1,89 @@
+﻿@model EditUserViewModel
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4 rounded" style="max-width: 600px; width: 100%;">
+        <h2 class="text-center mb-4">Edit User</h2>
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender"></label>
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role">Role</label>
+                <select asp-for="Role" class="form-control">
+                    @foreach (var role in Model.Roles)
+                    {
+                        <option value="@role.Value" selected="@(role.Selected)">@role.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="gradeContainer" style="display:none;">
+                <label asp-for="GradeId">Grade</label>
+                <select asp-for="GradeId" class="form-control">
+                    @foreach (var grade in Model.AvailableGrades)
+                    {
+                        <option value="@grade.Value">@grade.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="text-center d-flex justify-content-end">
+                <button type="button" onclick="window.location.href='/'" class="btn btn-secondary me-3 mt-2">Cancel</button>
+                <button type="submit" class="btn btn-primary mt-2">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var roleSelect = document.querySelector('[name="Role"]');
+            var gradeContainer = document.getElementById('gradeContainer');
+
+            roleSelect.addEventListener('change', function () {
+                if (roleSelect.value === 'Student') {
+                    gradeContainer.style.display = 'block';
+                } else {
+                    gradeContainer.style.display = 'none';
+                }
+            });
+
+            // Trigger the change event on page load to set the initial visibility
+            roleSelect.dispatchEvent(new Event('change'));
+        });
+    </script>
+}

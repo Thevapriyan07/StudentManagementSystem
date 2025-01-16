@@ -1,0 +1,10 @@
+﻿@model Grade
+
+<form method="post" asp-action="CreateGrade">
+    <div class="form-group">
+        <label asp-for="GradeName"></label>
+        <input asp-for="GradeName" class="form-control" />
+        <span asp-validation-for="GradeName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Grade</button>
+</form>

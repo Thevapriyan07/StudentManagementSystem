@@ -1,0 +1,142 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject SignInManager<ApplicationUser> SignInManager
+@inject ApplicationDbContext _context
+@{
+    var grades = await _context.Grades.ToListAsync();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - StudentManagementSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/StudentManagementSystem.styles.css" asp-append-version="true" />
+    <style>
+        /* Fixed footer */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background: #f4f6f9;">
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-4">
+            <div class="container">
+                <!-- Logo with Image -->
+                <a class="navbar-brand text-white" href="@Url.Action("Index", "Home")">
+                    SMS
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="@Url.Action("Index", "Home")">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="@Url.Action("Privacy", "Home")">Privacy</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin Options
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("ListUsers", "Administration")">Manage Users</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("ListRoles", "Administration")">Manage Roles</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin") || User.IsInRole("Teacher")))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="gradeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Grades
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="gradeDropdown">
+                                    @foreach (var grade in grades)
+                                    {
+                                        <li><a class="dropdown-item" href="@Url.Action("ViewStudentsByGrade", "Grade", new { gradeId = grade.GradeId })">@grade.GradeName</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="@Url.Action("AddMarks", "Marks")">Add Marks</a>
+                            </li>
+                        }
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Student"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="@Url.Action("MyDetails", "Marks")">View My Details</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <button type="submit" class="nav-link btn btn-link text-white py-0">
+                                        Logout @User?.Identity?.Name
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="@Url.Action("Login", "Account")">Login</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- Main Content -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            &copy; 2025 - StudentManagementSystem - <a href="@Url.Action("Privacy", "Home")" class="text-white">Privacy</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
